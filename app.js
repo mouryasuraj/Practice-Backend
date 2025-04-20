@@ -6,6 +6,7 @@ import connectDB from "./src/config/database.js";
 const app = express();
 const PORT = process.env.PORT
 
+
 connectDB()
   .then(() => {
     console.log("Database connection established")
