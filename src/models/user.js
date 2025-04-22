@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 
 const { Schema, model } = mongoose;
-const SECRETKEY = process.env.SECRETKEY
+
 
 const userSchema = new Schema(
   {
@@ -101,14 +101,14 @@ const userSchema = new Schema(
 
 //Verify password
 userSchema.methods.verifyPassword = async function (userInputPassword) {
-  const { password } = this;
-  return await bcrypt.compare(password, userInputPassword);
+    const hashedPassword = this.password;
+    return await bcrypt.compare(userInputPassword, hashedPassword);
 };
 
 //Generate token
 userSchema.methods.generateToken = function () {
-    const {email} = this
-    const token = jwt.sign({email}, SECRETKEY, {expiresIn:'1h'})
+    const {_id} = this
+    const token = jwt.sign({_id}, process.env.SECRETKEY, {expiresIn:'1h'})
     return token;
 }
 

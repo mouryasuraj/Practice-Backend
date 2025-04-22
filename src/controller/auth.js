@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken'
 import { handleError } from "../utils/helper.js";
 import { validateLoginRequestBody, validateSignUpRequestBody } from "../utils/validation.js";
 import User from "../models/user.js";
@@ -48,18 +47,20 @@ export const handleLogin = async (req, res) =>{
         //Check user exist or not
         const user = await User.findOne({email})
         if(!user){
+          console.log("User not found");
           return res.status(401).json({message:"Invalid credentials"})
         }
 
         //Check password
         const isPasswordCorrect = await user.verifyPassword(password)
         if(!isPasswordCorrect){
+          console.log("Password is incorrect");
           return res.status(401).json({message:"Invalid credentials"})
         }
 
         //Generate token
         const token = await user.generateToken();
-        res.cookies("token", token, {httpOnly:true, expires:new Date() + 3600000})
+        res.cookie("token", token, {httpOnly:true, expires:new Date(Date.now() + 3600000)})
 
         // Send success message
         res.json({message:"Logged in successfully"})
