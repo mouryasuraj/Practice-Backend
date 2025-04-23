@@ -20,7 +20,7 @@ const userAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    handleError(error, req)
+    handleError(error, res)
   }
 };
 

@@ -1,10 +1,11 @@
 import express from 'express'
-import { handleGetProfileByEmailId } from '../controller/profile';
+import { handleGetProfile, handleEditProfile, handleResetPassword } from '../controller/profile.js';
 
 const profileRouter = express.Router()
 
 
-profileRouter.get("/view/:userId", handleGetProfileByEmailId)
-
+profileRouter.get("/view", handleGetProfile)
+profileRouter.patch("/edit", handleEditProfile)
+profileRouter.patch("/resetpassword", handleResetPassword)
 
 export default profileRouter;
