@@ -9,5 +9,5 @@ export const allowedEditFields = ["firstName","lastName", "about", "skills"]
 export const allowedResetPasswordFields = ["currentPassword","newPassword", "confirmPassword"]
 
 // Connection Request
-export const allowedStatus = ["ignore","interested","accepted","rejected"]
+export const allowedStatus = ["ignored","interested","accepted","rejected"]
 export const allowedSendRequestFields = ["fromUserId","toUserId","status"]

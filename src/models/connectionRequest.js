@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { allowedStatus } from "../utils/constant";
+import { allowedStatus } from "../utils/constant.js";
 const { Schema, model } = mongoose;
 
 const connectionRequestSchema = new Schema(
@@ -22,6 +22,15 @@ const connectionRequestSchema = new Schema(
     timestamps: true,
   }
 );
+
+connectionRequestSchema.pre('save', function(next){
+  const connectionRequest = this
+  if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
+    throw new Error("You can't sent connection request to yourself")
+  }
+  next()
+})
+
 
 
 const ConnectionRequest = model("ConnectionRequest", connectionRequestSchema)

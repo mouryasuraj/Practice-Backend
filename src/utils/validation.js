@@ -183,18 +183,18 @@ export const validateResetPasswordRequestBody = (req) => {
 };
 
 export const validateSendRequestBody = (req) => {
-  const {status, toUser} = req.params
+  const {status, toUserId} = req.params
 
   if(!status){
     throw new Error("status params is not passed")
-  }else if(!toUser){
+  }else if(!toUserId){
     throw new Error("toUser params is not passed")
   }
 
   //validate field value
   const validation = [
     {
-      valid: status !== "ignored" || status !== "interested",
+      valid: status !== "ignored" && status !== "interested",
       message: `Status should be ignored or interested`,
     },
   ];
@@ -204,5 +204,4 @@ export const validateSendRequestBody = (req) => {
         throw new Error(check.message)
     }
   }
-
 };
